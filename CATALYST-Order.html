@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CATALYST | Order Cleaning Supplies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f8f6; --surface:#ffffff; --surface-2:#eef4f0; --ink:#12231c; --muted:#5c6b63;
+    --line:#dbe6df; --primary:#0e7c5a; --primary-dark:#0a5c43; --accent:#e8792b;
+    --whatsapp:#25d366; --danger:#c0392b; --shadow: 0 12px 30px -14px rgba(14,40,30,0.25);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0b1512; --surface:#122019; --surface-2:#16261e; --ink:#eaf3ee; --muted:#93a49b; --line:#22362c; --primary:#34d399; --primary-dark:#1fae7d; --accent:#f2994a; --shadow:0 12px 30px -14px rgba(0,0,0,0.6); }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;}
+  body{padding-bottom:96px;}
+  h1,h2,h3{font-family:'Fraunces',serif;margin:0;text-wrap:balance;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px;}
+  header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--surface) 90%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;max-width:640px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(155deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:900;font-size:18px;}
+  .brand .name{font-family:'Fraunces',serif;font-weight:900;font-size:19px;letter-spacing:-0.02em;}
+  .brand .tag{font-size:10.5px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;font-weight:600;}
+  .cart-btn{position:relative;background:var(--ink);color:var(--bg);border:none;border-radius:14px;padding:10px 14px;display:flex;gap:8px;align-items:center;font-weight:600;font-size:14px;cursor:pointer;}
+  .cart-btn .dot{position:absolute;top:-6px;right:-6px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;min-width:20px;height:20px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+  .hero{padding:28px 0 18px;}
+  .eyebrow{color:var(--primary);font-weight:700;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:10px;display:block;}
+  .hero h1{font-size:34px;line-height:1.08;letter-spacing:-0.01em;}
+  .hero p{color:var(--muted);margin-top:10px;font-size:15px;line-height:1.5;max-width:46ch;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px;}
+  .chip b{color:var(--ink);}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0 8px;}
+  @media (max-width:480px){ .grid{grid-template-columns:1fr;} }
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;}
+  .icon-box{height:96px;border-radius:16px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;}
+  .pname{font-family:'Fraunces',serif;font-weight:700;font-size:17px;letter-spacing:-0.01em;}
+  .pfrom{font-size:12px;color:var(--muted);}
+  .pfrom b{color:var(--primary);font-variant-numeric:tabular-nums;font-size:14px;}
+  .add-btn{margin-top:auto;background:var(--primary);color:#fff;border:none;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .add-btn:active{transform:scale(0.98);}
+
+  section#order{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:var(--shadow);}
+  section#order h2{font-size:22px;margin-bottom:14px;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .row3{display:grid;grid-template-columns:1.4fr 1fr 0.7fr;gap:10px;}
+  select,input,textarea{width:100%;padding:12px 13px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font-family:inherit;font-size:14px;font-weight:500;outline:none;}
+  select:focus,input:focus,textarea:focus{border-color:var(--primary);}
+  label.field-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;display:block;}
+  .field{margin-bottom:12px;}
+  .add-to-cart{width:100%;margin-top:4px;background:var(--ink);color:var(--bg);border:none;border-radius:14px;padding:14px;font-weight:700;font-size:14px;cursor:pointer;letter-spacing:0.02em;}
+
+  .cart-list{margin:18px 0;display:flex;flex-direction:column;gap:8px;max-height:260px;overflow-y:auto;}
+  .cart-row{display:flex;justify-content:space-between;align-items:center;background:var(--surface-2);border-radius:14px;padding:11px 13px;font-size:13.5px;}
+  .cart-row .meta{font-weight:600;}
+  .cart-row .sub{color:var(--muted);font-size:11.5px;font-weight:500;}
+  .cart-row .amt{font-weight:700;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:10px;}
+  .rm{background:none;border:none;color:var(--danger);font-size:16px;cursor:pointer;line-height:1;padding:2px 4px;}
+  .empty-note{color:var(--muted);font-size:13px;font-style:italic;padding:10px 2px;}
+
+  .totals{background:var(--ink);color:var(--bg);border-radius:18px;padding:18px 20px;margin-top:6px;}
+  .trow{display:flex;justify-content:space-between;font-size:12.5px;opacity:0.65;padding:2px 0;font-variant-numeric:tabular-nums;}
+  .trow.grand{opacity:1;font-size:22px;font-family:'Fraunces',serif;font-weight:800;border-top:1px solid rgba(255,255,255,0.15);margin-top:8px;padding-top:10px;}
+
+  .details h3{font-size:15px;margin:22px 0 12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-family:'IBM Plex Sans',sans-serif;font-weight:700;}
+  .send-btn{width:100%;margin-top:16px;background:var(--whatsapp);color:#fff;border:none;border-radius:16px;padding:17px;font-weight:700;font-size:15.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 14px 30px -12px rgba(37,211,102,0.55);}
+  .send-btn:active{transform:scale(0.99);}
+  .note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.5;}
+
+  footer{margin-top:34px;padding:26px 0 10px;text-align:center;color:var(--muted);font-size:12px;}
+  footer .fname{font-family:'Fraunces',serif;font-weight:800;color:var(--ink);font-size:15px;letter-spacing:0.02em;}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120%);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-size:13px;font-weight:600;transition:transform 0.3s ease;z-index:50;box-shadow:0 10px 24px -8px rgba(0,0,0,0.4);}
+  .toast.show{transform:translate(-50%,0);}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">
+    <div class="brand">
+      <div class="mark">C</div>
+      <div>
+        <div class="name">CATALYST</div>
+        <div class="tag">Home &amp; Floor Care</div>
+      </div>
+    </div>
+    <button class="cart-btn" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">
+      Basket <span id="cartCountInline">0 items</span>
+      <span class="dot" id="cartDot" style="display:none">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <span class="eyebrow">Wholesale &amp; Retail · Bengaluru</span>
+    <h1>Cleaning supplies, delivered to your door.</h1>
+    <p>Pick your products below, build your order, and send it straight to us on WhatsApp — no app, no account, no waiting.</p>
+    <div class="chips">
+      <div class="chip">✅ <b>5</b>&nbsp;products in stock</div>
+      <div class="chip">🚚 Home delivery</div>
+      <div class="chip">💬 Confirmed on WhatsApp</div>
+    </div>
+  </section>
+
+  <div class="grid" id="productGrid"></div>
+
+  <section id="order">
+    <h2>Build your order</h2>
+
+    <div class="field">
+      <label class="field-label">Product</label>
+      <select id="selProduct" onchange="syncVariant()"></select>
+    </div>
+    <div class="row3">
+      <div class="field">
+        <label class="field-label">Size</label>
+        <select id="selVariant"></select>
+      </div>
+      <div class="field">
+        <label class="field-label">Quantity</label>
+        <input type="number" id="selQty" value="1" min="1">
+      </div>
+      <div class="field">
+        <label class="field-label">&nbsp;</label>
+        <button class="add-to-cart" style="padding:12px 6px;" onclick="addToCart()">+ Add</button>
+      </div>
+    </div>
+
+    <div class="cart-list" id="cartList">
+      <p class="empty-note">Your basket is empty — add a product above.</p>
+    </div>
+
+    <div class="totals">
+      <div class="trow"><span>Items</span><span id="tItems">0</span></div>
+      <div class="trow"><span>Subtotal</span><span id="tSub">₹0</span></div>
+      <div class="trow grand"><span>Total</span><span id="tGrand">₹0</span></div>
+    </div>
+
+    <div class="details">
+      <h3>Delivery details</h3>
+      <div class="field"><input type="text" id="custName" placeholder="Full name"></div>
+      <div class="row2">
+        <div class="field"><input type="tel" id="custPhone" placeholder="Your WhatsApp number"></div>
+        <div class="field"><input type="text" id="custArea" placeholder="Area / Locality"></div>
+      </div>
+      <div class="field"><textarea id="custAddr" rows="2" placeholder="Full delivery address"></textarea></div>
+      <div class="field"><input type="text" id="custNote" placeholder="Any note (optional)"></div>
+    </div>
+
+    <button class="send-btn" id="prepareBtn" onclick="prepareOrder()">
+      Send Order on WhatsApp
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.47 3.44 1.28 4.89L2 22l5.32-1.39a9.87 9.87 0 0 0 4.72 1.2h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m5.71 14.06c-.24.68-1.39 1.3-1.92 1.37-.49.07-1.11.1-1.79-.11-.41-.13-.94-.3-1.62-.59-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.38c.26-.29.57-.36.76-.36h.55c.18 0 .41-.03.64.49.24.55.81 1.9.88 2.04.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.86-1.06.18-.28.36-.23.6-.14.24.09 1.55.73 1.81.86.26.14.44.2.5.31.06.13.06.7-.18 1.38"/></svg>
+    </button>
+    <p class="note" id="prepareNote">Tapping this opens WhatsApp with your order pre-filled. We'll confirm availability, delivery time and total within minutes.</p>
+
+    <div id="dualSendBox" hidden style="margin-top:14px;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:16px;">
+      <p style="margin:0 0 12px;font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Tap both, so your order reaches both our numbers</p>
+      <a id="sendLink1" class="send-btn" style="text-decoration:none;margin-top:0;" target="_blank" rel="noopener">1 · Send to Store WhatsApp</a>
+      <a id="sendLink2" class="send-btn" style="text-decoration:none;margin-top:10px;background:var(--primary-dark);" target="_blank" rel="noopener">2 · Send to Manager WhatsApp</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fname">CATALYST</div>
+    Phenyl · Floor Cleaner · Glass Cleaner · Room Freshener · Toilet Cleaner<br>
+    WhatsApp orders: +91 93442 59279 · +91 90439 17983
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ---- Catalog (edit prices/stock here if needed — this file is standalone) ----
+const CATALOG = [
+  { id:"phenyl", name:"Signature Phenyl", icon:"bottle", color:"#0e7c5a",
+    variants:[ {label:"500ml", price:40}, {label:"1L", price:75}, {label:"5L", price:330} ] },
+  { id:"floor", name:"Floor Cleaner", icon:"bottle", color:"#1f6fd1",
+    variants:[ {label:"500ml", price:55}, {label:"1L", price:95}, {label:"5L", price:410} ] },
+  { id:"glass", name:"Glass Cleaner", icon:"spray", color:"#2aa7c9",
+    variants:[ {label:"250ml", price:50}, {label:"500ml", price:85} ] },
+  { id:"freshener", name:"Room Freshener", icon:"spray", color:"#c9578f",
+    variants:[ {label:"200ml", price:110} ] },
+  { id:"toilet", name:"Toilet Cleaner", icon:"bottle", color:"#e8792b",
+    variants:[ {label:"500ml", price:70}, {label:"1L", price:125} ] }
+];
+const WHATSAPP_NUMBERS = ["919344259279", "919043917983"];
+
+function iconSvg(kind, color){
+  if(kind === "spray"){
+    return `<svg width="52" height="66" viewBox="0 0 52 66" fill="none">
+      <rect x="10" y="18" width="22" height="42" rx="7" fill="${color}" opacity="0.16"/>
+      <rect x="14" y="24" width="14" height="32" rx="5" fill="${color}"/>
+      <rect x="17" y="8" width="8" height="12" rx="2" fill="${color}"/>
+      <rect x="21" y="2" width="18" height="7" rx="3.5" fill="${color}" opacity="0.85"/>
+      <circle cx="42" cy="6" r="1.6" fill="${color}"/><circle cx="46" cy="10" r="1.6" fill="${color}"/><circle cx="45" cy="2" r="1.6" fill="${color}"/>
+    </svg>`;
+  }
+  return `<svg width="46" height="66" viewBox="0 0 46 66" fill="none">
+    <rect x="6" y="16" width="34" height="46" rx="9" fill="${color}" opacity="0.16"/>
+    <rect x="10" y="22" width="26" height="36" rx="6" fill="${color}"/>
+    <rect x="16" y="6" width="14" height="12" rx="3" fill="${color}"/>
+    <rect x="14" y="2" width="18" height="6" rx="3" fill="${color}" opacity="0.85"/>
+  </svg>`;
+}
+
+function renderGrid(){
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = CATALOG.map(p => {
+    const from = Math.min(...p.variants.map(v=>v.price));
+    return `<div class="card">
+      <div class="icon-box">${iconSvg(p.icon, p.color)}</div>
+      <div>
+        <div class="pname">${p.name}</div>
+        <div class="pfrom">From <b>₹${from}</b></div>
+      </div>
+      <button class="add-btn" onclick="quickPick('${p.id}')">Select &amp; add</button>
+    </div>`;
+  }).join('');
+}
+
+function populateSelects(){
+  const sel = document.getElementById('selProduct');
+  sel.innerHTML = CATALOG.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+  syncVariant();
+}
+function syncVariant(){
+  const p = CATALOG.find(x => x.id === document.getElementById('selProduct').value);
+  document.getElementById('selVariant').innerHTML = p.variants.map(v => `<option value="${v.label}">${v.label} — ₹${v.price}</option>`).join('');
+}
+function quickPick(id){
+  document.getElementById('selProduct').value = id;
+  syncVariant();
+  document.getElementById('order').scrollIntoView({behavior:'smooth'});
+}
+
+let cart = [];
+function addToCart(){
+  const pid = document.getElementById('selProduct').value;
+  const p = CATALOG.find(x => x.id === pid);
+  const label = document.getElementById('selVariant').value;
+  const variant = p.variants.find(v => v.label === label);
+  const qty = Math.max(1, parseInt(document.getElementById('selQty').value) || 1);
+  cart.push({ name:p.name, variant:variant.label, price:variant.price, qty, lineTotal:variant.price*qty });
+  renderCart();
+  showToast('Added to basket');
+}
+function removeFromCart(i){ cart.splice(i,1); renderCart(); }
+
+function renderCart(){
+  const list = document.getElementById('cartList');
+  if(cart.length === 0){
+    list.innerHTML = '<p class="empty-note">Your basket is empty — add a product above.</p>';
+  } else {
+    list.innerHTML = cart.map((it,i) => `
+      <div class="cart-row">
+        <div>
+          <div class="meta">${it.name} — ${it.variant}</div>
+          <div class="sub">Qty ${it.qty} × ₹${it.price}</div>
+        </div>
+        <div class="amt">₹${it.lineTotal}<button class="rm" onclick="removeFromCart(${i})">✕</button></div>
+      </div>`).join('');
+  }
+  const items = cart.reduce((s,it)=>s+it.qty,0);
+  const sub = cart.reduce((s,it)=>s+it.lineTotal,0);
+  document.getElementById('tItems').innerText = items;
+  document.getElementById('tSub').innerText = '₹'+sub;
+  document.getElementById('tGrand').innerText = '₹'+sub;
+  document.getElementById('cartCountInline').innerText = items + (items===1?' item':' items');
+  const dot = document.getElementById('cartDot');
+  if(items>0){ dot.style.display='flex'; dot.innerText = items; } else { dot.style.display='none'; }
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.innerText = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+function prepareOrder(){
+  if(cart.length === 0){ showToast('Add at least one product first'); return; }
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const area = document.getElementById('custArea').value.trim();
+  const addr = document.getElementById('custAddr').value.trim();
+  const noteField = document.getElementById('custNote').value.trim();
+  if(!name || !phone || !addr){ showToast('Please fill name, phone and address'); return; }
+
+  const orderNo = 'CT-' + Date.now().toString(36).toUpperCase();
+  let lines = cart.map((it,i) => `${i+1}. ${it.name} (${it.variant}) x${it.qty} — ₹${it.lineTotal}`).join('\n');
+  const total = cart.reduce((s,it)=>s+it.lineTotal,0);
+
+  const msg =
+`*NEW CATALYST ORDER*
+Order No: ${orderNo}
+--------------------------
+Customer: ${name}
+Phone: ${phone}
+Area: ${area || '-'}
+Address: ${addr}
+--------------------------
+${lines}
+--------------------------
+TOTAL: ₹${total}
+${noteField ? 'Note: ' + noteField : ''}`;
+
+  const encoded = encodeURIComponent(msg);
+  const url1 = `https://wa.me/${WHATSAPP_NUMBERS[0]}?text=${encoded}`;
+  const url2 = WHATSAPP_NUMBERS[1] ? `https://wa.me/${WHATSAPP_NUMBERS[1]}?text=${encoded}` : null;
+
+  // Try opening both immediately — most browsers allow multiple windows
+  // opened synchronously from the same tap.
+  window.open(url1, '_blank');
+  if(url2) window.open(url2, '_blank');
+
+  // Always reveal explicit buttons too, since some mobile browsers only
+  // ever allow ONE automatic popup per tap — tapping these guarantees
+  // delivery to both numbers even when the auto-open above is blocked.
+  document.getElementById('prepareBtn').hidden = true;
+  document.getElementById('prepareNote').hidden = true;
+  const link1 = document.getElementById('sendLink1');
+  link1.href = url1;
+  if(url2){
+    const link2 = document.getElementById('sendLink2');
+    link2.href = url2;
+    link2.hidden = false;
+  } else {
+    document.getElementById('sendLink2').hidden = true;
+  }
+  document.getElementById('dualSendBox').hidden = false;
+  showToast('Opening WhatsApp…');
+}
+
+renderGrid();
+populateSelects();
+renderCart();
+</script>
+</body>
+</html>
